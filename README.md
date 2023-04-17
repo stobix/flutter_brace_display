@@ -6,7 +6,7 @@ Draws a brace. Useful to group list items together.
 
 ## Prerequisites
 
-None, just `flutter pub get brace_display` and you're set.
+None, just do a quick `flutter pub get brace_display` and you're set.
 
 ## Usage
 
