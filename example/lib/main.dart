@@ -14,15 +14,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
-  Widget text(String s ) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(s),
-  );
-  Widget h1(String s ) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Text(s,textScaleFactor: 2),
-  );
+  Widget text(String s) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(s),
+      );
+  Widget h1(String s) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(s, textScaleFactor: 2),
+      );
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,8 +29,7 @@ class _MyAppState extends State<MyApp> {
         appBar: AppBar(
           title: text('Brace display example app'),
         ),
-        body:
-        SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -41,60 +39,52 @@ class _MyAppState extends State<MyApp> {
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
                       head: text("Good"),
-                      child:
-                      Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text('Cows are good'),
                           text('So are chickens'),
                           text('And pigs'),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
                       head: text("Bad"),
-                      child:
-                      Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text('Eating too much is bad'),
                           text('So is eating too little'),
                           text('And dying'),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 h1("Without header"),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
-                      child:
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          text('Cows are good'),
-                          text('So are chickens'),
-                          text('And pigs'),
-                        ],
-                      )
-                  ),
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      text('Cows are good'),
+                      text('So are chickens'),
+                      text('And pigs'),
+                    ],
+                  )),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
-                      child:
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          text('Eating too much is bad'),
-                          text('So is eating too little'),
-                          text('And dying'),
-                        ],
-                      )
-                  ),
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      text('Eating too much is bad'),
+                      text('So is eating too little'),
+                      text('And dying'),
+                    ],
+                  )),
                 ),
                 h1("Different header pos"),
                 Padding(
@@ -102,32 +92,28 @@ class _MyAppState extends State<MyApp> {
                   child: BraceDisplay(
                       head: text("Good"),
                       headPos: 0.3,
-                      child:
-                      Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text('Cows are good'),
                           text('So are chickens'),
                           text('And pigs'),
                         ],
-                      )
-                  ),
+                      )),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
                       head: text("Bad"),
                       headPos: 0.7,
-                      child:
-                      Column(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           text('Eating too much is bad'),
                           text('So is eating too little'),
                           text('And dying'),
                         ],
-                      )
-                  ),
+                      )),
                 ),
               ],
             ),

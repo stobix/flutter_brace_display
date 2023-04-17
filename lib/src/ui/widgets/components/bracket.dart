@@ -1,13 +1,12 @@
 part of '../brace_display.dart';
 
-class BracketStart extends StatelessWidget{
+class BracketStart extends StatelessWidget {
   final double thickness;
 
-  const BracketStart({this.thickness=1, super.key});
+  const BracketStart({this.thickness = 1, super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      CustomPaint(
+  Widget build(BuildContext context) => CustomPaint(
         painter: BracketPartPainter(thickness),
       );
 }
@@ -28,14 +27,12 @@ class BracketPartPainter extends CustomPainter with EquatableMixin {
       ..strokeWidth = 0;
     var path = Path()
       ..moveTo(w, h)
-      ..lineTo(0,h)
-      ..lineTo(0,0)
-      ..lineTo(thickness,0)
-      ..lineTo(thickness,h-thickness)
-      ..lineTo(w,h-thickness)
-      ..close()
-
-    ;
+      ..lineTo(0, h)
+      ..lineTo(0, 0)
+      ..lineTo(thickness, 0)
+      ..lineTo(thickness, h - thickness)
+      ..lineTo(w, h - thickness)
+      ..close();
     canvas.drawPath(path, strokePaint);
     canvas.drawPath(path, fillPaint);
   }
@@ -47,14 +44,14 @@ class BracketPartPainter extends CustomPainter with EquatableMixin {
   @override
   List<Object?> get props => [thickness];
 }
-class BracketEnd extends StatelessWidget{
+
+class BracketEnd extends StatelessWidget {
   final double thickness;
 
-  const BracketEnd({this.thickness=1, super.key});
+  const BracketEnd({this.thickness = 1, super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      CustomPaint(
+  Widget build(BuildContext context) => CustomPaint(
         painter: BracketEndPainter(thickness),
       );
 }
@@ -75,14 +72,12 @@ class BracketEndPainter extends CustomPainter with EquatableMixin {
       ..strokeWidth = 0;
     var path = Path()
       ..moveTo(w, 0)
-      ..lineTo(0,0)
-      ..lineTo(0,h)
-      ..lineTo(thickness,h)
-      ..lineTo(thickness,thickness)
-      ..lineTo(w,thickness)
-      ..close()
-
-    ;
+      ..lineTo(0, 0)
+      ..lineTo(0, h)
+      ..lineTo(thickness, h)
+      ..lineTo(thickness, thickness)
+      ..lineTo(w, thickness)
+      ..close();
     canvas.drawPath(path, strokePaint);
     canvas.drawPath(path, fillPaint);
   }
@@ -94,17 +89,16 @@ class BracketEndPainter extends CustomPainter with EquatableMixin {
   @override
   List<Object?> get props => [thickness];
 }
-class Bracket extends StatelessWidget{
+
+class Bracket extends StatelessWidget {
   final double thickness;
 
-  const Bracket({this.thickness=1, super.key});
+  const Bracket({this.thickness = 1, super.key});
 
   @override
-  Widget build(BuildContext context) =>
-      CustomPaint(
+  Widget build(BuildContext context) => CustomPaint(
         painter: BracketPainter(thickness),
       );
-
 }
 
 class BracketPainter extends CustomPainter with EquatableMixin {
@@ -123,15 +117,14 @@ class BracketPainter extends CustomPainter with EquatableMixin {
       ..strokeWidth = 0;
     var path = Path()
       ..moveTo(w, 0)
-      ..lineTo(0,0)
-      ..lineTo(0,h)
-      ..lineTo(w,h)
-      ..lineTo(w,h-thickness)
-      ..lineTo(thickness,h-thickness)
-      ..lineTo(thickness,thickness)
-      ..lineTo(w,thickness)
-      ..close()
-    ;
+      ..lineTo(0, 0)
+      ..lineTo(0, h)
+      ..lineTo(w, h)
+      ..lineTo(w, h - thickness)
+      ..lineTo(thickness, h - thickness)
+      ..lineTo(thickness, thickness)
+      ..lineTo(w, thickness)
+      ..close();
     canvas.drawPath(path, strokePaint);
     canvas.drawPath(path, fillPaint);
   }

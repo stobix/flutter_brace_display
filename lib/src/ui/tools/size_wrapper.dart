@@ -4,9 +4,7 @@ import 'package:flutter/rendering.dart';
 
 part 'size_render_object.dart';
 
-
 class SizeWrapper extends SingleChildRenderObjectWidget {
-
   final OnWidgetSizeChange onSizeChange;
 
   const SizeWrapper({
@@ -22,7 +20,6 @@ class SizeWrapper extends SingleChildRenderObjectWidget {
 }
 
 class DirectionSizeWrapper extends SingleChildRenderObjectWidget {
-
   final OnWidgetSizeChange onSizeChange;
 
   final OneDimRenderDirection direction;

@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 part 'components/brace.dart';
 part 'components/bracket.dart';
 
-
-class BraceDisplay extends StatefulWidget{
+class BraceDisplay extends StatefulWidget {
   /// The widget put to the left of the brace
   final Widget? head;
+
   /// The widget put to the right of the brace
   final Widget child;
 
@@ -33,8 +33,8 @@ class BraceDisplay extends StatefulWidget{
     this.head,
     required this.child,
     this.headPos,
-    this.braceThickness=0.3,
-    this.braceColor=Colors.black,
+    this.braceThickness = 0.3,
+    this.braceColor = Colors.black,
     this.brackets,
     this.showBrace = true,
     super.key,
@@ -45,96 +45,85 @@ class BraceDisplay extends StatefulWidget{
 }
 
 class _BraceDisplayState extends State<BraceDisplay> {
-  double bracewidth=50;
+  double braceWidth = 50;
   @override
   Widget build(BuildContext context) {
     var query = MediaQuery.of(context);
     return IntrinsicHeight(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Flexible(
-              flex: 3,
-              child:
-              widget.headPos != null ?
-              Container(
-                  alignment: FractionalOffset(1,widget.headPos!),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [widget.head?? Container()])
-              )
-                  :
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if(widget.head!=null)
-                    widget.head!
-                ],
-              ),
-            ),
-            Flexible(
-              child: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    SizeWrapper(
-                      onSizeChange: (Size size) {
-                        setState((){bracewidth=size.width;});
-                      },
-                    child:
-                    widget.showBrace? Brace(
-                      thickness: widget.braceThickness,
-                      headPos: widget.headPos??.5,
-                      color: widget.braceColor,
-                    ) : Container(),
-                    )
-                  ]+(
-                      widget.brackets?.map((meta) {
-                        switch(meta.runtimeType){
-                          case BracketStartMeta:
-                            return Positioned(
-                                right: 0,
-                                top: 0,
-                                height: meta.pos,
-                                width: bracewidth/4,
-                                child: const BracketStart()
-                            );
-                          case BracketEndMeta:
-                            return Positioned(
-                                right: 0,
-                                top: meta.pos,
-                                height: query.size.height-meta.pos,
-                                width: bracewidth/4,
-                                child: const BracketEnd()
-                            );
-                          case BracketFullMeta:
-                            return Positioned(
-                                right: 0,
-                                top: (meta as BracketFullMeta).endPos,
-                                height: meta.pos-meta.endPos,
-                                width: bracewidth/4,
-                                child: const Bracket()
-                            );
-                          default:
-                            return Container();
-                        }
-                      }
-                      ).toList()??[]
-                  )
-              ),
-            ),
-            Flexible(
-                flex: 10,
-                child: widget.child
-            ),
-          ],
-        ),
-      );
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Flexible(
+            flex: 3,
+            child: widget.headPos != null
+                ? Container(
+                    alignment: FractionalOffset(1, widget.headPos!),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [widget.head ?? Container()]))
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [if (widget.head != null) widget.head!],
+                  ),
+          ),
+          Flexible(
+            child: Stack(
+                fit: StackFit.expand,
+                children: <Widget>[
+                      SizeWrapper(
+                        onSizeChange: (Size size) {
+                          setState(() {
+                            braceWidth = size.width;
+                          });
+                        },
+                        child: widget.showBrace
+                            ? Brace(
+                                thickness: widget.braceThickness,
+                                headPos: widget.headPos ?? .5,
+                                color: widget.braceColor,
+                              )
+                            : Container(),
+                      )
+                    ] +
+                    (widget.brackets?.map((meta) {
+                          switch (meta.runtimeType) {
+                            case BracketStartMeta:
+                              return Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  height: meta.pos,
+                                  width: braceWidth / 4,
+                                  child: const BracketStart());
+                            case BracketEndMeta:
+                              return Positioned(
+                                  right: 0,
+                                  top: meta.pos,
+                                  height: query.size.height - meta.pos,
+                                  width: braceWidth / 4,
+                                  child: const BracketEnd());
+                            case BracketFullMeta:
+                              return Positioned(
+                                  right: 0,
+                                  top: (meta as BracketFullMeta).endPos,
+                                  height: meta.pos - meta.endPos,
+                                  width: braceWidth / 4,
+                                  child: const Bracket());
+                            default:
+                              return Container();
+                          }
+                        }).toList() ??
+                        [])),
+          ),
+          Flexible(flex: 10, child: widget.child),
+        ],
+      ),
+    );
   }
 }
 
-abstract class BracketMeta with EquatableMixin{
+abstract class BracketMeta with EquatableMixin {
   double pos;
   String key;
   BracketMeta({required this.pos, required this.key});
@@ -157,6 +146,7 @@ class BracketEndMeta extends BracketMeta {
 class BracketFullMeta extends BracketMeta {
   double endPos;
   @override
-  List<Object?> get props => [pos,endPos];
-  BracketFullMeta({required super.pos, required this.endPos, required super.key});
+  List<Object?> get props => [pos, endPos];
+  BracketFullMeta(
+      {required super.pos, required this.endPos, required super.key});
 }
