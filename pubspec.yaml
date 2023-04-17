@@ -1,10 +1,11 @@
 name: brace_display
-description: A new Flutter package project.
+description: Display a brace alongside a widget.
 version: 0.0.1
+repository: https://github.com/stobix/flutter_brace_display
 #homepage:
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: '>=2.17.2 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
