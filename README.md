@@ -1,4 +1,4 @@
-Draws a brace. Useful to group list items together.
+A widget that draws a brace alongside another widget. Useful to group list items together.
 
 ## Features
 
