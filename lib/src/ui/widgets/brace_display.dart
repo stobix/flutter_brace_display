@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 part 'components/brace.dart';
 part 'components/bracket.dart';
 
+/// Which way the brace is faced.
+///
+/// "left" is taken to mean "header to the left".
 enum BraceDirection {
   /// Shows header to the left
   left,

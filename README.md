@@ -15,6 +15,7 @@ None, just do a quick `flutter pub get brace_display` and you're set.
 ```dart
 BraceDisplay(
   header: Text("Items"),
+  direction: BraceDirection.left, // or BraceDirection.right. Defaults to left.
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start, // to justify the text close to the brace
     children:[
