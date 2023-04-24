@@ -35,25 +35,34 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               children: [
                 h1("With header"),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: BraceDisplay(
-                      head: text("Good"),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          text('Cows are good'),
-                          text('So are chickens'),
-                          text('And pigs'),
-                        ],
-                      )),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 500,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: BraceDisplay(
+                            head: text("Good"),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                text('Cows are good'),
+                                text('So are chickens'),
+                                text('And pigs'),
+                              ],
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
                       head: text("Bad"),
+                      direction: BraceDirection.right,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           text('Eating too much is bad'),
                           text('So is eating too little'),
@@ -61,6 +70,24 @@ class _MyAppState extends State<MyApp> {
                         ],
                       )),
                 ),
+                h1("from both sides"),
+                IntrinsicWidth(
+                    child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: BraceDisplay(
+                      head: text("Good"),
+                      direction: BraceDirection.right,
+                      child: BraceDisplay(
+                          head: text("Good"),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              text('Cows are good'),
+                              text('So are chickens'),
+                              text('And pigs'),
+                            ],
+                          ))),
+                )),
                 h1("Without header"),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -77,14 +104,16 @@ class _MyAppState extends State<MyApp> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: BraceDisplay(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      text('Eating too much is bad'),
-                      text('So is eating too little'),
-                      text('And dying'),
-                    ],
-                  )),
+                    direction: BraceDirection.right,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        text('Eating too much is bad'),
+                        text('So is eating too little'),
+                        text('And dying'),
+                      ],
+                    ),
+                  ),
                 ),
                 h1("Different header pos"),
                 Padding(
@@ -101,20 +130,24 @@ class _MyAppState extends State<MyApp> {
                         ],
                       )),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: BraceDisplay(
-                      head: text("Bad"),
-                      headPos: 0.7,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          text('Eating too much is bad'),
-                          text('So is eating too little'),
-                          text('And dying'),
-                        ],
-                      )),
-                ),
+                SizedBox(
+                  width: 500,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: BraceDisplay(
+                        head: text("Bad"),
+                        headPos: 0.7,
+                        direction: BraceDirection.right,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            text('Eating too much is bad'),
+                            text('So is eating too little'),
+                            text('And dying'),
+                          ],
+                        )),
+                  ),
+                )
               ],
             ),
           ),

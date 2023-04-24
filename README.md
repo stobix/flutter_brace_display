@@ -2,7 +2,9 @@ A widget that draws a brace alongside another widget. Useful to group list items
 
 ## Features
 
-![Sample](https://github.com/stobix/flutter_brace_display/raw/master/readme_resources/sample.png)
+![Sample](https://github.com/stobix/flutter_brace_display/raw/master/readme_resources/with_header.png)
+![Sample](https://github.com/stobix/flutter_brace_display/raw/master/readme_resources/both.png)
+![Sample](https://github.com/stobix/flutter_brace_display/raw/master/readme_resources/rest.png)
 
 ## Prerequisites
 

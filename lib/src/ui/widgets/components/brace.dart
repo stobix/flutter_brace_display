@@ -4,16 +4,18 @@ class Brace extends StatelessWidget {
   final double thickness;
   final double headPos;
   final Color color;
+  final BraceDirection direction;
   const Brace({
     this.thickness = 0.3,
     this.headPos = 0.5,
     super.key,
     required this.color,
+    required this.direction,
   });
 
   @override
   Widget build(BuildContext context) => CustomPaint(
-        painter: BracePainter(thickness, headPos, color),
+        painter: BracePainter(thickness, headPos, color, direction),
         // size: Size(50,1),
       );
 }
@@ -22,7 +24,8 @@ class BracePainter extends CustomPainter {
   final double thickness;
   final double headPos;
   final Color color;
-  const BracePainter(this.thickness, this.headPos, this.color);
+  final BraceDirection direction;
+  const BracePainter(this.thickness, this.headPos, this.color, this.direction);
 
   /// adds [this.thickness] to the denominator of the x coord
   ///
@@ -43,26 +46,52 @@ class BracePainter extends CustomPainter {
       ..color = color
       ..style = PaintingStyle.fill
       ..strokeWidth = 0;
-    var upperRight = Point(size.width, 0.0);
-    var lowerRight = Point(size.width, size.height);
-    var headPos = Point(0.0, size.height * this.headPos);
+    switch (direction) {
+      case BraceDirection.left:
+        var upperRight = Point(size.width, 0.0);
+        var lowerRight = Point(size.width, size.height);
+        var headPos = Point(0.0, size.height * this.headPos);
 
-    var p = <Point<double>>[upperRight, headPos, lowerRight];
-    var v = <Point<double>>[
-      Point(size.width / 4, p[0].y),
-      Point(3 * size.width / 4, p[1].y),
-      Point(size.width / 4, p[2].y),
-    ];
+        var p = <Point<double>>[upperRight, headPos, lowerRight];
+        var v = <Point<double>>[
+          Point(size.width / 4, p[0].y),
+          Point(3 * size.width / 4, p[1].y),
+          Point(size.width / 4, p[2].y),
+        ];
 
-    var path = Path()
-      ..moveTo(p[0].x, p[0].y)
-      ..pcubicTo(v[0], v[1], p[1])
-      ..pcubicTo(v[1], v[2], p[2])
-      ..pcubicTo(_d(v[2]), _d(v[1]), p[1])
-      ..pcubicTo(_d(v[1]), _d(v[0]), p[0])
-      ..close();
-    canvas.drawPath(path, strokePaint);
-    canvas.drawPath(path, fillPaint);
+        var path = Path()
+          ..moveTo(p[0].x, p[0].y)
+          ..pcubicTo(v[0], v[1], p[1])
+          ..pcubicTo(v[1], v[2], p[2])
+          ..pcubicTo(_d(v[2]), _d(v[1]), p[1])
+          ..pcubicTo(_d(v[1]), _d(v[0]), p[0])
+          ..close();
+        canvas.drawPath(path, strokePaint);
+        canvas.drawPath(path, fillPaint);
+        break;
+      case BraceDirection.right:
+        var upperLeft = Point(0.0, 0.0);
+        var lowerLeft = Point(0.0, size.height);
+        var headPos = Point(size.width, size.height * this.headPos);
+
+        var p = <Point<double>>[upperLeft, headPos, lowerLeft];
+        var v = <Point<double>>[
+          Point(3 * size.width / 4, p[0].y),
+          Point(size.width / 4, p[1].y),
+          Point(3 * size.width / 4, p[2].y),
+        ];
+
+        var path = Path()
+          ..moveTo(p[0].x, p[0].y)
+          ..pcubicTo(v[0], v[1], p[1])
+          ..pcubicTo(v[1], v[2], p[2])
+          ..pcubicTo(_d(v[2]), _d(v[1]), p[1])
+          ..pcubicTo(_d(v[1]), _d(v[0]), p[0])
+          ..close();
+        canvas.drawPath(path, strokePaint);
+        canvas.drawPath(path, fillPaint);
+        break;
+    }
   }
 
   @override

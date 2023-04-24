@@ -7,9 +7,20 @@ import 'package:flutter/material.dart';
 part 'components/brace.dart';
 part 'components/bracket.dart';
 
+enum BraceDirection {
+  /// Shows header to the left
+  left,
+
+  /// Shows header to the right
+  right,
+}
+
 class BraceDisplay extends StatefulWidget {
   /// The widget put to the left of the brace
   final Widget? head;
+
+  /// Which way the brace is facing
+  final BraceDirection direction;
 
   /// The widget put to the right of the brace
   final Widget child;
@@ -31,6 +42,7 @@ class BraceDisplay extends StatefulWidget {
 
   const BraceDisplay({
     this.head,
+    this.direction = BraceDirection.left,
     required this.child,
     this.headPos,
     this.braceThickness = 0.3,
@@ -53,74 +65,87 @@ class _BraceDisplayState extends State<BraceDisplay> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Flexible(
-            flex: 3,
-            child: widget.headPos != null
-                ? Container(
-                    alignment: FractionalOffset(1, widget.headPos!),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [widget.head ?? Container()]))
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [if (widget.head != null) widget.head!],
-                  ),
-          ),
-          Flexible(
-            child: Stack(
-                fit: StackFit.expand,
-                children: <Widget>[
-                      SizeWrapper(
-                        onSizeChange: (Size size) {
-                          setState(() {
-                            braceWidth = size.width;
-                          });
-                        },
-                        child: widget.showBrace
-                            ? Brace(
-                                thickness: widget.braceThickness,
-                                headPos: widget.headPos ?? .5,
-                                color: widget.braceColor,
-                              )
-                            : Container(),
-                      )
-                    ] +
-                    (widget.brackets?.map((meta) {
-                          switch (meta.runtimeType) {
-                            case BracketStartMeta:
-                              return Positioned(
-                                  right: 0,
-                                  top: 0,
-                                  height: meta.pos,
-                                  width: braceWidth / 4,
-                                  child: const BracketStart());
-                            case BracketEndMeta:
-                              return Positioned(
-                                  right: 0,
-                                  top: meta.pos,
-                                  height: query.size.height - meta.pos,
-                                  width: braceWidth / 4,
-                                  child: const BracketEnd());
-                            case BracketFullMeta:
-                              return Positioned(
-                                  right: 0,
-                                  top: (meta as BracketFullMeta).endPos,
-                                  height: meta.pos - meta.endPos,
-                                  width: braceWidth / 4,
-                                  child: const Bracket());
-                            default:
-                              return Container();
-                          }
-                        }).toList() ??
-                        [])),
-          ),
-          Flexible(flex: 10, child: widget.child),
-        ],
+        children: widget.direction == BraceDirection.left
+            ? [
+                header(),
+                brace(query),
+                children(),
+              ]
+            : [
+                children(),
+                brace(query),
+                header(),
+              ],
       ),
     );
   }
+
+  Widget header() => Flexible(
+        flex: 3,
+        child: widget.headPos != null
+            ? Container(
+                alignment: FractionalOffset(1, widget.headPos!),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [widget.head ?? Container()]))
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [if (widget.head != null) widget.head!],
+              ),
+      );
+
+  Widget brace(MediaQueryData query) => Flexible(
+        child: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[
+                  SizeWrapper(
+                    onSizeChange: (Size size) {
+                      setState(() {
+                        braceWidth = size.width;
+                      });
+                    },
+                    child: widget.showBrace
+                        ? Brace(
+                            direction: widget.direction,
+                            thickness: widget.braceThickness,
+                            headPos: widget.headPos ?? .5,
+                            color: widget.braceColor,
+                          )
+                        : Container(),
+                  )
+                ] +
+                (widget.brackets?.map((meta) {
+                      switch (meta.runtimeType) {
+                        case BracketStartMeta:
+                          return Positioned(
+                              right: 0,
+                              top: 0,
+                              height: meta.pos,
+                              width: braceWidth / 4,
+                              child: const BracketStart());
+                        case BracketEndMeta:
+                          return Positioned(
+                              right: 0,
+                              top: meta.pos,
+                              height: query.size.height - meta.pos,
+                              width: braceWidth / 4,
+                              child: const BracketEnd());
+                        case BracketFullMeta:
+                          return Positioned(
+                              right: 0,
+                              top: (meta as BracketFullMeta).endPos,
+                              height: meta.pos - meta.endPos,
+                              width: braceWidth / 4,
+                              child: const Bracket());
+                        default:
+                          return Container();
+                      }
+                    }).toList() ??
+                    [])),
+      );
+
+  Widget children() => Flexible(flex: 10, child: widget.child);
 }
 
 abstract class BracketMeta with EquatableMixin {

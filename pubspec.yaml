@@ -1,6 +1,6 @@
 name: brace_display
 description: Display a brace alongside a widget.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/stobix/flutter_brace_display
 #homepage:
 
